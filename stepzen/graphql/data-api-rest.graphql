@@ -1,0 +1,32 @@
+type Document {
+  callsign: String
+  country: String
+  iata: String
+  icao: String
+  id: Int
+  name: String
+  type: String
+  meta_id: String
+}
+
+type Query {
+  
+  getAllTravelDocuments: [Document]
+    @rest(
+      endpoint: "https://api.couchbase.live/v0.1-alpha/api/buckets/travel-sample/scopes/_default/collections/_default/docs"
+      headers: [{ name: "Content-Type", value: "application/json"},{ name: "X-CB-Cluster-Token", value:"CTEH1_8535f7d5db155fd7050b4edf739a13cf954bf6a33742d52225803f2c527ebee1_0LBZDWkavtw2vatfXjLSTanUHBnB1eVS75f22XOWRg1XKokOfOqzWXG1Mssv6NKQIsdzr7D9XRibx8mpnVnh94Qi1Qhn5U34kvG8OH9vLIn0k6O96peevVB5ahC5MYzYhEOmMiE6LE8t2VRMgENOlgrwCJ6eZfThGqiOHVrzGF6AYB0IriKX2VVsMbFmJFy3eyRJ4wj+2IMdfJ9w+aPT/T6eXoNa+RRWBzPPESdBIf5ENwc/+wNneP4fCeDa4X/+WrWu6SRNeI7AoYw="}]
+    )
+  
+  getTravelDocumentById(id: String!): Document
+    @rest(
+      endpoint: "https://api.couchbase.live/v0.1-alpha/api/buckets/travel-sample/scopes/_default/collections/_default/docs/$id"
+      headers: [{ name: "Content-Type", value: "application/json"},{ name: "X-CB-Cluster-Token", value:"CTEH1_8535f7d5db155fd7050b4edf739a13cf954bf6a33742d52225803f2c527ebee1_0LBZDWkavtw2vatfXjLSTanUHBnB1eVS75f22XOWRg1XKokOfOqzWXG1Mssv6NKQIsdzr7D9XRibx8mpnVnh94Qi1Qhn5U34kvG8OH9vLIn0k6O96peevVB5ahC5MYzYhEOmMiE6LE8t2VRMgENOlgrwCJ6eZfThGqiOHVrzGF6AYB0IriKX2VVsMbFmJFy3eyRJ4wj+2IMdfJ9w+aPT/T6eXoNa+RRWBzPPESdBIf5ENwc/+wNneP4fCeDa4X/+WrWu6SRNeI7AoYw="}]
+    )
+
+  getTravelDocumentsByCountry(country: String!): [Document]
+    @rest(
+      endpoint: "https://api.couchbase.live/v0.1-alpha/api/buckets/travel-sample/scopes/_default/collections/_default/docs/?where=country=\"{{.Get \"country\"}}\""
+      headers: [{ name: "Content-Type", value: "application/json"},{ name: "X-CB-Cluster-Token", value:"CTEH1_8535f7d5db155fd7050b4edf739a13cf954bf6a33742d52225803f2c527ebee1_0LBZDWkavtw2vatfXjLSTanUHBnB1eVS75f22XOWRg1XKokOfOqzWXG1Mssv6NKQIsdzr7D9XRibx8mpnVnh94Qi1Qhn5U34kvG8OH9vLIn0k6O96peevVB5ahC5MYzYhEOmMiE6LE8t2VRMgENOlgrwCJ6eZfThGqiOHVrzGF6AYB0IriKX2VVsMbFmJFy3eyRJ4wj+2IMdfJ9w+aPT/T6eXoNa+RRWBzPPESdBIf5ENwc/+wNneP4fCeDa4X/+WrWu6SRNeI7AoYw="}]
+    )
+
+}
