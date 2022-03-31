@@ -1,0 +1,43 @@
+type Document {
+  callsign: String
+  country: String
+  iata: String
+  icao: String
+  id: Int
+  name: String
+  type: String
+  _id: String
+  _rev: String
+}
+
+type Rows {
+  rows: [RowType]
+  total_rows: Int
+  update_seq: Int 
+}
+
+type RowType {
+  key: String
+  id: String
+  value: Rev
+}
+
+type Rev {
+  rev: String
+}
+
+type Query {
+
+  getAllTravelDocuments(limit: Int = 10): Rows
+    @rest(
+      endpoint: "https://api.couchbase.live/sgw/traveldb/_all_docs?limit=$limit"
+      headers: [{ name: "Content-Type", value: "application/json"}, {name: "Authorization", value: "Basic dGVzdDU6dGVzdDEyMw=="}]
+    )
+  
+  getTravelDocumentById(id: String!): Document
+    @rest(
+      endpoint: "https://api.couchbase.live/sgw/traveldb/$id"
+      headers: [{ name: "Content-Type", value: "application/json"}, {name: "Authorization", value: "Basic dGVzdDU6dGVzdDEyMw=="}]
+    )
+
+}
