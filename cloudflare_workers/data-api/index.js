@@ -64,9 +64,13 @@
  
  async function handleRequest(request) {
    const { searchParams } = new URL(request.url);
-   bucket = searchParams.get('bucket') || searchParams.get('database') ||  searchParams.get('data') || 'travel-sample';
+   bucket = searchParams.get('bucketName') || searchParams.get('bucket') || searchParams.get('database') ||  searchParams.get('data') || 'travel-sample';
    scope = searchParams.get('scope') || searchParams.get('tenant') || '_default';
    collection = searchParams.get('collection') || searchParams.get('table') || '_default';
+
+   connect_string = searchParams.get('connect') || 'couchbase://localhost';
+   access_key = searchParams.get('access') || 'Administrator';
+   secret_key = searchParams.get('secret') || 'password';
 
    url = apiHost + apiVersion +'/scopes/'+scope+'/collections/'+collection+'/docs';
     queryParams = '?';
@@ -92,6 +96,9 @@
     const init = {
       headers: {
         'Content-Type': 'application/json',
+        'X-CB-DAPI-CONNECT-STRING': connect_string,
+        'X-CB-DAPI-ACCESS-KEY': access_key,
+        'X-CB-DAPI-SECRET-KEY': secret_key,
       },
       //body: JSON.stringify(querydata),
     };
@@ -111,7 +118,21 @@
     <style> ${html_style} </style>
   </head>
   <body>
-    <h1>Couchbase data from: ${bucket}.${scope}.${collection}</h1>
+    <h1>Couchbase live data</h1>
+    <h2>Connection:</h2>
+    <li>Couchbase Data API host: <i><a href="${apiHost}/${apiVersion}/spec">${apiHost}</a></i>
+    <li>Couchbase DB Server: <i>${connect_string}</i>
+    <li>DB/bucket name: <i>${bucket}</i>
+    <li>Group/scope: <i>${scope}</i>
+    <li>Table/collection: <i>${collection}</i>
+    <h2>Change the server/bucket with below URL parameters</h2>
+    <li>bucketName=<i>bucketName</i>
+    <li>connect=<i>couchbases://hostname</i>
+    <li>access=<i>access_key or username</i>
+    <li>secret=<i>secret_key or password</i>
+
+    <br><br>NOTE: Add cidr: <i>18.144.18.150/32</i> to allow access to the Capella cluster.
+    
     ${html_content}
   </body>`;
 
