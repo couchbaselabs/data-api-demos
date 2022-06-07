@@ -1,0 +1,27 @@
+
+type TravelData {
+  callsign: String
+  country: String
+  iata: String
+  icao: String
+  id: Int
+  meta_id: String
+  name: String
+  type: String
+}
+
+type Cluster {
+  bucket: String
+  scope: String
+  collection: string
+}
+
+type Query {
+  getDocById: TravelData
+
+  getTravelData: [TravelData]
+    @rest(
+      endpoint: "https://api.couchbase.live/v0.1-alpha/api/buckets/travel-sample/scopes/_default/collections/_default/docs"
+      headers: [{ name: "Content-Type", value: "application/json"},{ name: "X-CB-Cluster-Token", value:"CTEH1_7d9055c996de2ae103261a67cbbb9850fa0024c753b3fcc8e0dc99ec7af554fe_edAGzT+oP5PYTQgQx0FuuhUqw9HjjWds6uezV2n96gvfgFGmjkkUfDkXNzVaZ+YwlFV16qjfl0IgBN9WjLG7p1DVjAnkbk26bkKZ4pI93nhOJT4pcHJHfGo260xxxCaggoqCmB3zHBJwVT5yhcjyI4KWCxC+UGfSUYsZVFxjw1fLt0c0Vn0u/0FOL9DAgVaqamO+XgEHcX8cIwRNfsKnL80wjTtY8lZvYqtLcUD8TpapBXeBC9hB9I4yZDG039WsAJQBqbvchLCeC5Xz"}]
+    )
+}

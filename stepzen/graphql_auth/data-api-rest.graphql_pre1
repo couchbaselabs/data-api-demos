@@ -1,0 +1,52 @@
+
+type Auth {
+  id: Int!
+  token: String!
+}
+
+type Document {
+  callsign: String
+  country: String
+  iata: String
+  icao: String
+  id: Int
+  name: String
+  type: String
+  meta_id: String
+}
+
+type Query {
+  
+  getToken(connectstr: String, username: String, password: String): Auth
+    @rest(
+      method: POST
+      endpoint: "https://api.couchbase.live/v0.1-alpha/api/token?connectStr=$connectstr&username=$username&password=$password"
+    )
+
+  getAllTravelDocuments(token: String!): [Document]
+    @rest(
+      endpoint: "https://api.couchbase.live/v0.1-alpha/api/buckets/travel-sample/scopes/_default/collections/_default/docs"
+      headers: [{ name: "Content-Type", value: "application/json"},{ name: "X-CB-Cluster-Token", value: "$token"}]
+    )
+  
+  getTravelDocumentById(id: String!, token: String!): Document
+    @rest(
+      endpoint: "https://api.couchbase.live/v0.1-alpha/api/buckets/travel-sample/scopes/_default/collections/_default/docs/$id"
+      headers: [{ name: "Content-Type", value: "application/json"},{ name: "X-CB-Cluster-Token", value: "$token" }]
+    )
+
+  getTravelDocumentsByCountry(country: String!, token: String!): [Document]
+    @rest(
+      endpoint: "https://api.couchbase.live/v0.1-alpha/api/buckets/travel-sample/scopes/_default/collections/_default/docs/?where=country=\"{{.Get \"country\"}}\""
+      headers: [{ name: "Content-Type", value: "application/json"},{ name: "X-CB-Cluster-Token", value: "$token" }]
+    )
+
+   query_with_key: Query
+        @sequence(
+            steps: [
+                { query: "getToken" }
+                { query: "getAllTravelDocuments" }
+            ]
+        )
+
+}
