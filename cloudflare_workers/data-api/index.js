@@ -69,6 +69,9 @@
    collection = searchParams.get('collection') || searchParams.get('table') || '_default';
 
    connect_string = searchParams.get('connect') || 'couchbase://localhost';
+   if (!connect_string.includes('couchbase://') && !connect_string.includes('couchbases://')) {
+     connect_string = 'couchbases://' + connect_string;
+   }
    access_key = searchParams.get('access') || 'Administrator';
    secret_key = searchParams.get('secret') || 'password';
 
@@ -127,9 +130,9 @@
     <li>Table/collection: <i>${collection}</i>
     <h2>Change the server/bucket with below URL parameters</h2>
     <li>bucketName=<i>bucketName</i>
-    <li>connect=<i>couchbases://hostname</i>
-    <li>access=<i>access_key or username</i>
-    <li>secret=<i>secret_key or password</i>
+    <li>connect=<i>hostname<i> or <i>couchbases://hostname</i>
+    <li>access=<i>access_key</i> or <i>username</i>
+    <li>secret=<i>secret_key</i> or <i>password</i>
 
     <br><br>NOTE: Add cidr: <i>18.144.18.150/32</i> to allow access to the Capella cluster.
     
