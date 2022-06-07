@@ -1,0 +1,56 @@
+
+type DocumentContent {
+  callsign: String
+  country: String
+  iata: String
+  icao: String
+  id: Int
+  name: String
+  type: String
+  meta_id: String
+}
+
+type SingleDocument {
+  doc: DocumentContent
+}
+
+type Documents {
+  docs: [DocumentContent]
+}
+
+type Query {
+  
+  getAllTravelDocuments: Documents
+    @rest(
+      endpoint: "https://dapi.couchbase.live/v1/scopes/_default/collections/_default/docs"
+      headers: [{ name: "Content-Type", value: "application/json"},
+      { name: "X-CB-DAPI-CONNECT-STRING", value:"couchbase://localhost"},
+      { name: "X-CB-DAPI-ACCESS-KEY", value:"Administrator"},
+      { name: "X-CB-DAPI-SECRET-KEY", value:"password"},
+      { name: "X-CB-DAPI-NAME", value:"travel-sample"}
+      ]
+    )
+  
+  getTravelDocumentById(id: String!): SingleDocument
+    @rest(
+      endpoint: "https://dapi.couchbase.live/v1/scopes/_default/collections/_default/docs/$id"
+      headers: [{ name: "Content-Type", value: "application/json"},
+      { name: "X-CB-DAPI-CONNECT-STRING", value:"couchbase://localhost"},
+      { name: "X-CB-DAPI-ACCESS-KEY", value:"Administrator"},
+      { name: "X-CB-DAPI-SECRET-KEY", value:"password"},
+      { name: "X-CB-DAPI-NAME", value:"travel-sample"}
+      ]
+    )
+
+  getTravelDocumentsByCountry(country: String!): Documents
+    @rest(
+      endpoint: "https://dapi.couchbase.live/v1/scopes/_default/collections/_default/docs/?where=country=\"{{.Get \"country\"}}\""
+      headers: [{ name: "Content-Type", value: "application/json"},
+      { name: "X-CB-DAPI-CONNECT-STRING", value:"couchbase://localhost"},
+      { name: "X-CB-DAPI-ACCESS-KEY", value:"Administrator"},
+      { name: "X-CB-DAPI-SECRET-KEY", value:"password"},
+      { name: "X-CB-DAPI-NAME", value:"travel-sample"}
+      ]
+    )
+
+}
