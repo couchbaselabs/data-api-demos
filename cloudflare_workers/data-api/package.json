@@ -1,0 +1,16 @@
+{
+  "private": true,
+  "name": "data-api",
+  "version": "1.0.0",
+  "description": "A simple Couchbase travel-sample data access using Data API from Cloudflare Workers project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write '**/*.{js,css,json,md}'"
+  },
+  "author": "Jagadesh Munta <jagadesh.munta@couchbase.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "prettier": "^1.18.2"
+  }
+}
