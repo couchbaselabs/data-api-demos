@@ -130,7 +130,7 @@
     <li>Table/collection: <i>${collection}</i>
     <h2>Change the server/bucket with below URL parameters</h2>
     <li>bucketName=<i>bucketName</i>
-    <li>connect=<i>hostname<i> or <i>couchbases://hostname</i>
+    <li>connect=<i>hostname</i> or <i>couchbases://hostname</i>
     <li>access=<i>access_key</i> or <i>username</i>
     <li>secret=<i>secret_key</i> or <i>password</i>
 
