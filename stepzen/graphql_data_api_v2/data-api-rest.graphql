@@ -24,7 +24,7 @@ type Query {
     @rest(
       endpoint: "https://dapi.couchbase.live:29292/v1/scopes/sample/collections/airline/docs"
       headers: [{ name: "Content-Type", value: "application/json"},
-      { name: "Authorization", value:"Basic dXNlcm5hbWUxOlBhc3N3b3JkMSE=1"}
+      { name: "Authorization", value:"Basic dXNlcm5hbWUxOlBhc3N3b3JkMSE="}
       ]
     )
   
