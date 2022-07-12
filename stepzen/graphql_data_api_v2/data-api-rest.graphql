@@ -1,0 +1,47 @@
+
+type DocumentContent {
+  callsign: String
+  country: String
+  iata: String
+  icao: String
+  id: Int
+  name: String
+  type: String
+  meta_id: String
+}
+
+type SingleDocument {
+  doc: DocumentContent
+}
+
+type Documents {
+  docs: [DocumentContent]
+}
+
+type Query {
+  
+  getAllTravelDocuments: Documents
+    @rest(
+      endpoint: "https://dapi.couchbase.live:29292/v1/scopes/sample/collections/airline/docs"
+      headers: [{ name: "Content-Type", value: "application/json"},
+      { name: "Authorization", value:"Basic dXNlcm5hbWUxOlBhc3N3b3JkMSE=1"}
+      ]
+    )
+  
+  getTravelDocumentById(id: String!): SingleDocument
+    @rest(
+      endpoint: "https://dapi.couchbase.live:29292/v1/scopes/sample/collections/airline/docs/$id"
+      headers: [{ name: "Content-Type", value: "application/json"},
+      { name: "Authorization", value:"Basic dXNlcm5hbWUxOlBhc3N3b3JkMSE="}
+      ]
+    )
+
+  getTravelDocumentsByCountry(country: String!): Documents
+    @rest(
+      endpoint: "https://dapi.couchbase.live:29292/v1/scopes/sample/collections/airline/docs/?where=country=\"{{.Get \"country\"}}\""
+      headers: [{ name: "Content-Type", value: "application/json"},
+      { name: "Authorization", value:"Basic dXNlcm5hbWUxOlBhc3N3b3JkMSE="}
+      ]
+    )
+
+}
