@@ -4,9 +4,8 @@
  * @param {string} someHost the host to send the request to
  * @param {string} url the URL to send the request to
  */
- const apiHost = 'https://dapi.couchbase.live:29292';
- const apiVersion = '/v1';
- //const url = apiHost + apiVersion+ '/scopes/_default/collections/_default/docs';
+ const apiEndpoint = 'https://dapi.couchbase.live:29292/v1';
+ //const url = apiEndpoint + '/scopes/sample/collections/airline/docs';
  
  /**
   * gatherResponse awaits and returns a response body as a string.
@@ -70,7 +69,7 @@
    access_key = searchParams.get('access') || 'username1';
    secret_key = searchParams.get('secret') || 'Password1!';
 
-   url = apiHost + apiVersion +'/scopes/'+scope+'/collections/'+collection+'/docs';
+   url = apiEndpoint +'/scopes/'+scope+'/collections/'+collection+'/docs';
     queryParams = '?';
  
     for (let p of searchParams.keys()) {
@@ -111,7 +110,7 @@
   <body>
     <h1>Couchbase live data</h1>
     <h2>Connection:</h2>
-    <li>Couchbase Data API host: <i><a href="${apiHost}/${apiVersion}/spec">${apiHost}</a></i>
+    <li>Couchbase Data API endpoint: <i><a href="${apiEndpoint}/spec">${apiEndpoint}</a></i>
     <li>Group/scope: <i>${scope}</i>
     <li>Table/collection: <i>${collection}</i>
     <h2>Change the scope/collection with below URL parameters</h2>
@@ -120,8 +119,6 @@
     <li>access=<i>access_key</i> or <i>username</i>
     <li>secret=<i>secret_key</i> or <i>password</i>
 
-    <br><br>NOTE: Add cidr: <i>18.144.18.150/32</i> to allow access to the Capella cluster.
-    
     ${html_content}
   </body>`;
 
