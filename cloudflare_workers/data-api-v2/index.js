@@ -5,6 +5,7 @@
  * @param {string} url the URL to send the request to
  */
  const apiEndpoint = 'https://dapi.couchbase.live:29292/v1';
+ let apiUrl = apiEndpoint;
  //const url = apiEndpoint + '/scopes/sample/collections/airline/docs';
  
  /**
@@ -63,13 +64,14 @@
  
  async function handleRequest(request) {
    const { searchParams } = new URL(request.url);
+  
+   apiUrl = searchParams.get('apiurl') || apiEndpoint;
    scope = searchParams.get('scope') || searchParams.get('tenant') || 'inventory';
    collection = searchParams.get('collection') || searchParams.get('table') || 'airline';
+   access_key = searchParams.get('access') || searchParams.get('public') || 'username1';
+   secret_key = searchParams.get('secret') || searchParams.get('private') || 'Password1!';
 
-   access_key = searchParams.get('access') || 'username1';
-   secret_key = searchParams.get('secret') || 'Password1!';
-
-   url = apiEndpoint +'/scopes/'+scope+'/collections/'+collection+'/docs';
+   url = apiUrl +'/scopes/'+scope+'/collections/'+collection+'/docs';
     queryParams = '?';
  
     for (let p of searchParams.keys()) {
@@ -84,7 +86,7 @@
 
     
     console.log("final url="+url2);
-    
+    console.log("access="+access_key);
     const init = {
       headers: {
         'Content-Type': 'application/json',
@@ -110,7 +112,8 @@
   <body>
     <h1>Couchbase live data</h1>
     <h2>Connection:</h2>
-    <li>Couchbase Data API endpoint: <i><a href="${apiEndpoint}/spec">${apiEndpoint}</a></i>
+    <li>Couchbase Data API endpoint: <i><a href="${apiUrl}/spec">${apiUrl}</a></i>
+    <li>Access: <i>${access_key}</i>
     <li>Group/scope: <i>${scope}</i>
     <li>Table/collection: <i>${collection}</i>
     <h2>Change the scope/collection with below URL parameters</h2>
