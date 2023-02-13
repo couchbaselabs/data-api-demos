@@ -4,7 +4,7 @@
  * @param {string} someHost the host to send the request to
  * @param {string} url the URL to send the request to
  */
- const apiEndpoint = 'https://dapi.couchbase.live:29292/v1';
+ const apiEndpoint = 'https://dapi.couchbase.live/v1';
  let apiUrl = apiEndpoint;
  //const url = apiEndpoint + '/scopes/sample/collections/airline/docs';
  
@@ -68,8 +68,8 @@
    apiUrl = searchParams.get('apiurl') || apiEndpoint;
    scope = searchParams.get('scope') || searchParams.get('tenant') || 'inventory';
    collection = searchParams.get('collection') || searchParams.get('table') || 'airline';
-   access_key = searchParams.get('access') || searchParams.get('public') || 'username1';
-   secret_key = searchParams.get('secret') || searchParams.get('private') || 'Password1!';
+   access_key = searchParams.get('access') || searchParams.get('public') || 'username';
+   secret_key = searchParams.get('secret') || searchParams.get('private') || 'password';
 
    url = apiUrl +'/scopes/'+scope+'/collections/'+collection+'/docs';
     queryParams = '?';
@@ -89,7 +89,6 @@
     console.log("access="+access_key);
     const init = {
       headers: {
-        'Content-Type': 'application/json',
         'Authorization': 'Basic '+btoa(access_key+':'+secret_key),
       },
       //body: JSON.stringify(querydata),

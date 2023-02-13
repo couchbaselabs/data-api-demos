@@ -32,7 +32,6 @@ function getResultHeaders() {
 
  const options = {
   method: 'get',
-  contentType: 'application/json',
   headers: { 
     'Authorization': 'Basic '+Utilities.base64Encode(apiAccesskey+':'+apiSecretkey)
   }
