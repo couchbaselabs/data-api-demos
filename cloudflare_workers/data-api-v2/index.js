@@ -26,7 +26,7 @@
       let results = '<table border="true"><tr><th>#</th>';
         
       if (documents.length > 0) {
-        let keys = Object.keys(documents[0]);
+        let keys = Object.keys(documents[0].doc);
         for (let i = 0; i < keys.length; i++) {
             results += '<th>'+ keys[i] +'</th>';
         }
@@ -34,7 +34,7 @@
         for (d = 1; d <= documents.length; d++) {
           results += '<tr><td>'+ d +'</td>';
           for (let i = 0; i < keys.length; i++) {
-            val = documents[d-1][keys[i]];
+            val = (documents[d-1].doc)[keys[i]];
             if (val == null || val == undefined) {
               val = '';
             } else {
@@ -66,6 +66,9 @@
    const { searchParams } = new URL(request.url);
   
    apiUrl = searchParams.get('apiurl') || apiEndpoint;
+   if (! apiUrl.endsWith('/v1')) {
+      apiUrl += '/v1';
+    }
    scope = searchParams.get('scope') || searchParams.get('tenant') || 'inventory';
    collection = searchParams.get('collection') || searchParams.get('table') || 'airline';
    access_key = searchParams.get('access') || searchParams.get('public') || 'username';
